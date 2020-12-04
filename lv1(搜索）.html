@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #text {
+            border: #E13E3E;
+            border-radius: 3px;
+            background-color: #E13E3E;
+            height: 20px;
+            color: #FFFFFF;
+        }
+
+        .pic {
+            position: relative;
+            top: 5.5px;
+            left: 2px;
+        }
+
+        .div {
+            background-color: #EC4141;
+        }
+
+        .span {
+            position: relative;
+            top: -8px;
+            left: 30px;
+            border-radius: 10px;
+            widows: 30px;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .answer {
+            color: #999999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div">
+        <img src="logo.png" alt="">
+        <span class="span">
+            <label for="" class="search"> <img src="tubiao.png" alt="" class="pic"><input type="text" value=""
+                    onkeyup="showHint(this.value)" id="text"></label>
+        </span>
+    </div>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+    <p class="answer"></p>
+
+    </p>
+</body>
+
+<script>
+    function showHint(keywords) {
+        if (keywords.length == 0) {
+            document.getElementById("answer").innerHTML = "";
+            return;
+        }
+        var url = "http://musicapi.leanapp.cn/search?keywords= " + keywords;
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', url);
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    var text = document.querySelector('#answer');
+                    const a = JSON.parse(xhr.responseText);
+                    const { result } = a;//a为从xhr.responseText中取得歌曲信息
+                    const { songs } = result;
+                    var input = document.querySelectorAll('.answer');
+                    for (let i = 0; i < songs.length; i++) {
+                        var { artists } = songs[i];
+                        var { album } = songs[i];
+                        input[i].innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + songs[i].name + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + artists[0].name + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + album.name;
+                    }
+
+                }
+            }
+        }
+    }
+</script>
+
+</html>

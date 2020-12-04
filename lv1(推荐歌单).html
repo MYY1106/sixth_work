@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .change {
+            width: 240px;
+            height: 240px;
+            border-radius: 5px;
+
+        }
+
+        .box {
+            width: 242px;
+            height: 324px;
+            background-color: rgb(255, 255, 255);
+
+        }
+
+        .text {
+            position: relative;
+            top: -20px;
+            font-size: 15px;
+
+        }
+
+        .outline {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="button" value="推荐歌单" onclick="getSong()">
+    <div class="outline">
+        <span class="box">
+            <img src="null" alt="" class="img">
+            <p class="text"></p>
+        </span>
+        <span class="box">
+            <img src="null" alt="" class="img">
+            <p class="text"></p>
+        </span>
+        <span class="box">
+            <img src="null" alt="" class="img">
+            <p class="text"></p>
+        </span>
+        <span class="box">
+            <img src="null" alt="" class="img">
+            <p class="text"></p>
+        </span>
+        <span class="box">
+            <img src="null" alt="" class="img">
+            <p class="text"></p>
+        </span>
+        <span class="box">
+            <img src="null" alt="" class="img">
+            <p class="text"></p>
+        </span>
+        <span class="box">
+            <img src="null" alt="" class="img">
+            <p class="text"></p>
+        </span>
+        <span class="box">
+            <img src="null" alt="" class="img">
+            <p class="text"></p>
+        </span>
+        <span class="box">
+            <img src="null" alt="" class="img">
+            <p class="text"></p>
+        </span>
+        <span class="box">
+            <img src="null" alt="" class="img">
+            <p class="text"></p>
+        </span>
+    </div>
+
+</body>
+<script>
+    function getSong() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', 'http://musicapi.leanapp.cn/personalized?limit=10', 'ture')
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    //取出歌单的图像和名字                    
+                    var res = JSON.parse(xhr.responseText);
+                    var result = res.result;
+                    var img = new Array(10);
+                    var what = new Array(10);
+                    for (let i = 0; i < result.length; i++) {
+                        console.log(result[i]);
+                        const { name } = result[i];
+                        const { picUrl } = result[i];
+                        what[i] = name;
+                        img[i] = picUrl;
+                        console.log(what[i]);
+                    }
+                    putimg = document.querySelectorAll('.img');
+                    text = document.querySelectorAll('.text');
+                    for (let i = 0; i < img.length; i++) {
+                        putimg[i].src = img[i];
+                        putimg[i].className = 'change';
+                        text[i].innerHTML = what[i];
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+</html>
